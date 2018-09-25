@@ -1,6 +1,6 @@
 # Repo for my personal portfolio site
 
-You can view it live at [ivan-munguia.netlify.com](https://gbengaoni.com/)
+You can view it live at [gbengaoni.com](https://gbengaoni.com/)
 
 ### Installation
 
