@@ -63,7 +63,8 @@ const config = {
   }
 }
 
-const isProduction = process.env.NODE_ENV === 'production';
+//const isProduction = process.env.NODE_ENV === 'production';
+const isProduction =  true;
 
 const plugins = [
   new HtmlWebpackPlugin({
