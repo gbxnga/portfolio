@@ -1,12 +1,17 @@
 # Repo for my personal portfolio site
 
-You can view it live at [ivan-munguia.netlify.com](https://ivan-munguia.netlify.com/)
+You can view it live at [ivan-munguia.netlify.com](https://gbengaoni.com/)
 
 ### Installation
 
 Clone this repo 
 ```sh
-$ git clone https://github.com/warborn/portfolio.git
+$ git clone https://github.com/gbxnga/portfolio.git
+```
+
+This repo was originally forked from
+```sh
+https://github.com/warborn/portfolio
 ```
 
 Install all the dependencies
