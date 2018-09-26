@@ -11,6 +11,8 @@ const PATHS = {
   indexPageStyles:path.join(srcPath, 'scss', 'index.scss'),
   projectsPage: path.join(srcPath, 'js', 'projects.js'),
   projectsPageStyles: path.join(srcPath, 'scss', 'projects.scss'),
+  contactPage: path.join(srcPath, 'js', 'contact.js'),
+  contactPageStyles: path.join(srcPath, 'scss', 'projects.scss'),
   build: path.join(__dirname, 'dist'),
 };
 
@@ -18,6 +20,7 @@ const config = {
   entry: {
     index: [PATHS.indexPage, PATHS.indexPageStyles],
     projects: [PATHS.projectsPage, PATHS.projectsPageStyles],
+    contact: [PATHS.contactPage, PATHS.contactPageStyles],
   },
   output: {
     path: PATHS.build,
@@ -78,6 +81,12 @@ const plugins = [
     chunks: ['projects'],
     filename: 'projects.html',
     template: './src/projects.pug'
+  }),
+  new HtmlWebpackPlugin({
+    inject: true,
+    chunks: ['contact'], 
+    filename: 'contact.html',
+    template: './src/contact.html'  
   }),
   new ExtractTextPlugin({
     filename: '[name]_bundle.css'
