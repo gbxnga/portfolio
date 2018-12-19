@@ -64,13 +64,8 @@
 
         </div>
         <div class="col-md-8" id="form-container">
-        <div class="bio flow-text">
-          <input required style="background-color:white;padding:10px;border-radius:px;width:100%;border:none;outline:none;margin-bottom:15px;border-bottom:2px solid #e57373" placeholder="Name">
-          <input required type="email" style="background-color:white;padding:10px;border-radius:px;width:100%;border:none;outline:none;margin-bottom:15px;border-bottom:2px solid #e57373" placeholder="Email">
-          <input style="background-color:white;padding:10px;border-radius:px;width:100%;border:none;outline:none;margin-bottom:15px;border-bottom:2px solid #e57373" placeholder="Subject">
-          <textarea required style="background-color:white;padding:10px;border-radius:px;width:100%;height:200px;border:none;outline:none;border-bottom:2px solid #e57373" placeholder="Message"></textarea>
-
-          <button class="btn" style="background-color:#e57373;color:white" >SEND MESSAGE</button>
+        <div class="bio flow-text" id="form-container-inner">
+           
         </div> 
         </div>
         </div>
@@ -80,5 +75,80 @@
       </div>
     </section><!-- end of about-me section--> 
   </div><!-- end of main container -->
-<script type="text/javascript" src="/contact_bundle.js"></script></body>
+<script type="text/javascript" src="/contact_bundle.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+<script type="text/babel">
+const domContainer = document.querySelector('#form-container-inner');
+class Form extends React.Component{
+
+constructor(){
+  super()
+  this.state = { 
+    message:"",
+    showMessage:false,
+    loading:false
+  }
+
+  this.nameInput = React.createRef();
+  this.emailInput = React.createRef();
+  this.messageInput = React.createRef();
+  this.subjectInput = React.createRef();
+
+  this.handleSendMail = this.handleSendMail.bind(this)
+}
+handleSendMail(e){
+          e.preventDefault() 
+
+          const name = this.nameInput.value;
+          const email = this.emailInput.value;
+          const message = this.messageInput.value;
+          const subject = this.subjectInput.value;
+
+          axios.post(`https://15v5keagxg.execute-api.us-east-1.amazonaws.com/prod`)
+          .then(response =>  {
+            console.log(response);
+            const {success} = response.data
+            if(success){
+              this.setState({message:"Email Successfully Sent",showMessage:true})
+
+              setTimeout(() => {
+                
+                this.setState({showMessage:false})
+                
+              }, 4000);
+            }
+            
+            
+          })
+          .catch(function (error) {
+            console.error(error);
+          }); 
+         
+     } 
+
+render(){
+
+  const { showMessage, message } = this.state
+
+  return(
+    <div>
+      { showMessage ? <div class="alert alert-warning">{message}</div> :""}
+    <form onSubmit={this.handleSendMail}>
+        <input ref={input => (this.nameInput = input)} required style={{backgroundColor:"white",padding:10,width:"100%",border:"none",outline:"none",marginBottom:15,borderBottom:"2px solid #e57373"}} placeholder="Name"/>
+        <input ref={input => (this.emailInput = input)} required type="email" style={{backgroundColor:"white",padding:10,width:"100%",border:"none",outline:"none",marginBottom:15,borderBottom:"2px solid #e57373"}} placeholder="Email"/>
+        <input ref={input => (this.subjectInput = input)} required style={{backgroundColor:"white",padding:10,width:"100%",border:"none",outline:"none",marginBottom:15,borderBottom:"2px solid #e57373"}} placeholder="Subject"/>
+        <textarea ref={input => (this.messageInput = input)} required style={{backgroundColor:"white",padding:10,width:"100%",border:"none",outline:"none",marginBottom:15,borderBottom:"2px solid #e57373", height:200}} placeholder="Message"></textarea>
+
+        <button type="submit"  className="btn" style={{backgroundColor:"#e57373",color:"white"}} >SEND MESSAGE</button>
+    </form>
+    </div>
+  )
+}
+}
+ReactDOM.render(<Form/>, domContainer);
+</script>
+</body>
 </html>
