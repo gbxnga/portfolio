@@ -107,7 +107,7 @@ handleSendMail(e){
           const message = this.messageInput.value;
           const subject = this.subjectInput.value;
 
-          axios.post(`https://15v5keagxg.execute-api.us-east-1.amazonaws.com/prod`)
+          axios.post(`https://15v5keagxg.execute-api.us-east-1.amazonaws.com/v1/send-mail?`)
           .then(response =>  {
             console.log(response);
             const {success} = response.data
